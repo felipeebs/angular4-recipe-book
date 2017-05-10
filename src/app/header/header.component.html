@@ -6,8 +6,12 @@
 
     <div class="navbar-default">
       <ul class="nav navbar-nav">
-        <li><a href="#" (click)="onChangeActiveComponent('recipes')">Recipes</a></li>
-        <li><a href="#" (click)="onChangeActiveComponent('shopping-list')">Shopping List</a></li>
+        <li [ngClass]="{'active': activeComponent === 'recipes'}">
+          <a href="#" (click)="onChangeActiveComponent('recipes')">Recipes</a>
+        </li>
+        <li [ngClass]="{'active': activeComponent === 'shopping-list'}">
+          <a href="#" (click)="onChangeActiveComponent('shopping-list')">Shopping List</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
