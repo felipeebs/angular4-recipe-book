@@ -11,7 +11,8 @@ import { RecipeService } from '../../recipe.service';
 export class RecipeItemComponent {
   @Input() recipe: Recipe;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService) {
+  }
 
   onSelected() {
     this.recipeService.recipeSelected.emit(this.recipe);
