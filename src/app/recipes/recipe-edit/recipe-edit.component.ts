@@ -13,6 +13,7 @@ import { Recipe } from '../recipe.model';
 export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
   id: number;
+  editMode = false;
 
   constructor(private recipesService: RecipesService,
               private route: ActivatedRoute) {
@@ -21,6 +22,7 @@ export class RecipeEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) =>  {
       this.id = +params['id'];
+      this.editMode = !!params['id'];
       this.recipe = this.recipesService.getRecipe(this.id);
     });
   }
