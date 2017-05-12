@@ -1,16 +1,17 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Recipe book</a>
+      <a href="#" class="navbar-brand"  [routerLink]="['/']">Recipe book</a>
     </div>
 
     <div class="navbar-default">
       <ul class="nav navbar-nav">
-        <li [ngClass]="{'active': activeComponent === 'recipes'}">
-          <a href="#" (click)="onChangeActiveComponent('recipes')">Recipes</a>
+        <!--<li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+        <li routerLinkActive="active">
+          <a href="#" [routerLink]="['/recipes']">Recipes</a>
         </li>
-        <li [ngClass]="{'active': activeComponent === 'shopping-list'}">
-          <a href="#" (click)="onChangeActiveComponent('shopping-list')">Shopping List</a>
+        <li routerLinkActive="active">
+          <a href="#" [routerLink]="['/shopping-list']">Shopping List</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

@@ -7,8 +7,5 @@
       *ngIf="selectedRecipe; else noRecipeSelected"
       [recipe]="selectedRecipe"
     ></app-recipe-detail>
-    <ng-template #noRecipeSelected>
-      <p>Select a recipe to view details.</p>
-    </ng-template>
   </div>
 </div>
