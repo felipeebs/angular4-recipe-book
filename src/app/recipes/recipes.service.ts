@@ -4,12 +4,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
-export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
-
-  constructor(private shoppingListservice: ShoppingListService) {
-  }
-
+export class RecipesService {
   private recipes: Recipe[] = [
     new Recipe('Tasty Schnitzel',
       'A super-tasty Schnitzel - just awesome!',
@@ -28,8 +23,18 @@ export class RecipeService {
       ])
   ];
 
+  recipeSelected = new EventEmitter<Recipe>();
+
+  constructor(private shoppingListservice: ShoppingListService) {
+  }
+
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  getRecipe(index: number) {
+    console.log('index', index);
+    return this.recipes[index];
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
