@@ -21,13 +21,14 @@
       <label for="image-path">Image URL</label>
       <input type="text" id="image-path"
              formControlName="imageUrl"
+             #imageUrl
              class="form-control">
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <img src="" alt="" class="img-responsive">
+    <img [src]="imageUrl.value" class="img-responsive">
   </div>
 </div>
 <div class="row">
