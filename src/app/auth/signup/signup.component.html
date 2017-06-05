@@ -7,9 +7,9 @@
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" class="form-control" ngModel>
+        <input type="password" id="password" name="password" class="form-control" minlength="6" ngModel>
       </div>
-      <button class="btn btn-primary" type="submit">Sign Up</button>
+      <button class="btn btn-primary" type="submit" [disabled]="f.invalid">Sign Up</button>
     </form>
   </div>
 </div>
