@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, Effect } from '@ngrx/effects';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/mergeMap';
 import { fromPromise } from 'rxjs/observable/fromPromise';
@@ -18,7 +19,8 @@ export class AuthEffects {
                      return action.payload;
                    })
                    .switchMap((authData: { username: string, password: string }) => {
-                     return fromPromise(firebase.auth().createUserWithEmailAndPassword(authData.username, authData.password));
+                     return fromPromise(firebase.auth()
+                                                .createUserWithEmailAndPassword(authData.username, authData.password));
                    })
                    .switchMap(() => {
                      return fromPromise(firebase.auth().currentUser.getIdToken());
@@ -38,7 +40,8 @@ export class AuthEffects {
                      return action.payload;
                    })
                    .switchMap((authData: { username: string, password: string }) => {
-                     return fromPromise(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password));
+                     return fromPromise(firebase.auth()
+                                                .signInWithEmailAndPassword(authData.username, authData.password));
                    })
                    .switchMap(() => {
                      return fromPromise(firebase.auth().currentUser.getIdToken());
@@ -51,6 +54,15 @@ export class AuthEffects {
                      ]
                    });
 
+  @Effect({dispatch: false})
+  authLogout = this.actions$
+                   .ofType(AuthActions.LOGOUT)
+                   .do(() => {
+                     firebase.auth().signOut();
+                     this.router.navigate(['/']);
+                   });
+
   constructor(private router: Router,
-              private actions$: Actions) {}
+              private actions$: Actions) {
+  }
 }
