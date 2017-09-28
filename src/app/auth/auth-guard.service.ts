@@ -13,14 +13,18 @@ export class AuthGuard implements CanActivate {
   constructor(private store: Store<fromApp.AppState>) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.store.select('auth').map((authState: fromAuth.State) => {
-      return authState.isAuthenticated;
-    });
+    return this.store.select('auth')
+               .take(1)
+               .map((authState: fromAuth.State) => {
+                 return authState.isAuthenticated;
+               });
   }
 
-  // canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
-  //   return this.store.select('auth').map((authState: fromAuth.State) => {
-  //     return authState.isAuthenticated;
-  //   });
-  // }
+  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+    return this.store.select('auth')
+               .take(1)
+               .map((authState: fromAuth.State) => {
+                 return authState.isAuthenticated;
+               });
+  }
 }

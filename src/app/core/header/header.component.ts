@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import * as firebase from 'firebase';
 
 import { DataStorageService } from '../../shared/data-storage.service';
 import * as fromApp from '../../store/app.reducers';
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogOut() {
+    firebase.auth().signOut();
     this.store.dispatch(new AuthActions.Logout());
   }
 }
