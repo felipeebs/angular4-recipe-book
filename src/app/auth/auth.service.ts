@@ -12,20 +12,6 @@ export class AuthService {
               private store: Store<fromApp.AppState>) {
   }
 
-  signUpUser(email: string, password: string) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(user => {
-              this.store.dispatch(new AuthActions.Signup());
-              firebase.auth().currentUser.getIdToken()
-                      .then((token: string) => {
-                        this.store.dispatch(new AuthActions.SetToken(token));
-                      });
-            })
-            .catch(
-              error => console.log(error)
-            );
-  }
-
   signInUser(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password)
             .then(
