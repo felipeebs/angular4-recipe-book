@@ -29,5 +29,24 @@ export class AuthEffects {
                      ]
                    });
 
+  @Effect()
+  authSignIn = this.actions$
+                   .ofType(AuthActions.DO_SIGNIN)
+                   .map((action: AuthActions.DoSignup) => {
+                     return action.payload;
+                   })
+                   .switchMap((authData: { username: string, password: string }) => {
+                     return fromPromise(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password));
+                   })
+                   .switchMap(() => {
+                     return fromPromise(firebase.auth().currentUser.getIdToken());
+                   })
+                   .mergeMap((token: string) => {
+                     return [
+                       {type: AuthActions.SIGNIN},
+                       {type: AuthActions.SET_TOKEN, payload: token}
+                     ]
+                   });
+
   constructor(private actions$: Actions) {}
 }
