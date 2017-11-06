@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
-import { RecipesService } from '../recipes.service';
+import { Store } from '@ngrx/store';
 
 import { Recipe } from '../recipe.model';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as fromRecipe from '../store/recipes.reducers';
+import * as RecipesActions from '../store/recipes.actions';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -12,22 +13,24 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./recipe-edit.component.css']
 })
 export class RecipeEditComponent implements OnInit {
-  recipe: Recipe;
   id: number;
   editMode = false;
   recipeForm: FormGroup;
 
-  constructor(private recipesService: RecipesService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private store: Store<fromRecipe.RecipesState>) {
   }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.editMode = !!params['id'];
-      this.recipe = this.recipesService.getRecipe(this.id);
-      this.initForm(this.recipe);
+      this.store.select('recipes')
+          .take(1)
+          .subscribe((recipeState: fromRecipe.State) => {
+            this.initForm(recipeState.recipes[this.id]);
+          });
     });
   }
 
@@ -66,9 +69,9 @@ export class RecipeEditComponent implements OnInit {
     //   this.recipeForm.value['ingredients']
     // );
     if (this.editMode) {
-      this.recipesService.updateRecipe(this.id, this.recipeForm.value);
+      this.store.dispatch(new RecipesActions.UpdateRecipe({index: this.id, recipe: this.recipeForm.value}))
     } else {
-      this.recipesService.addRecipe(this.recipeForm.value);
+      this.store.dispatch(new RecipesActions.AddRecipe(this.recipeForm.value));
     }
     this.onCancel();
   }
