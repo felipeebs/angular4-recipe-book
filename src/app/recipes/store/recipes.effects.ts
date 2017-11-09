@@ -32,7 +32,7 @@ export class RecipesEffects {
       }
     });
 
-  @Effect()
+  @Effect({dispatch: false})
   recipeStore = this.actions$
                     .ofType(RecipesActions.STORE_RECIPES)
                     .withLatestFrom(this.store.select('recipes'))

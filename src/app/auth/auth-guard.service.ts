@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, RouterStateSnapsho
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/take';
 
 import * as fromApp from '../store/app.reducers';
 import * as fromAuth from '../auth/store/auth.reducers';
